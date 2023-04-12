@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.stah.goodreversi.ui.theme.GoodReversiTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,7 +33,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GoodReversiTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -43,7 +44,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ReversiCell(
     onClick: () -> Unit,
@@ -55,9 +55,7 @@ fun ReversiCell(
         if (color == Color.Transparent) 1f else 0.5f,
         animationSpec = tween(300), label = ""
     )
-
      */
-
     Box(modifier = modifier.size(40.dp)) {
         if (color != Color.Transparent) {
             AnimatedVisibility(visible = color != Color.Transparent) {
@@ -68,8 +66,7 @@ fun ReversiCell(
                         .border(1.dp, Color.Black)
                         .size(36.dp)
                         .align(Alignment.Center)
-                        .border(2.dp, Color.Black, CircleShape)
-                        .clickable { onClick },
+                        .border(2.dp, Color.Black, CircleShape),
                     shape = CircleShape,
                     color = color
                 ) {}
@@ -78,22 +75,21 @@ fun ReversiCell(
             Surface(
                 modifier = modifier
                     .size(40.dp)
-                    .border(1.dp, Color.Black),
+                    .border(1.dp, Color.Black)
+                    .clickable { onClick.invoke() },
                 color = color
             ) {}
         }
     }
 }
 
-/*
-
- */
-
-
 @Composable
 fun ReversiBoard() {
     val game = remember { ReversiGame() }
     Column {
+        // 現在の手番を表示
+        Text(text = "Current turn: ${if (game.currentPlayer == Color.Black) "Black" else "White"}", fontSize = 24.sp)
+
         for (y in 0 until 8) {
             Row {
                 for (x in 0 until 8) {
@@ -109,7 +105,6 @@ fun ReversiBoard() {
         }
     }
 }
-
 
 @Composable
 fun ReversiApp() {

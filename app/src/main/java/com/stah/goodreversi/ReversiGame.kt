@@ -18,8 +18,4 @@ class ReversiGame {
     fun switchTurn() {
         currentPlayer = if (currentPlayer == Color.Black) Color.White else Color.Black
     }
-
-    fun showBoard(){
-
-    }
 }

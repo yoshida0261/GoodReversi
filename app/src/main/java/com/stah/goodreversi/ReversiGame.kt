@@ -4,6 +4,11 @@ import androidx.compose.ui.graphics.Color
 
 class ReversiGame {
     private val board = Board()
+
+    fun showCurrentPlayer(): String {
+        return if (currentPlayer == Color.Black) "Black" else "White"
+    }
+
     var currentPlayer = Color.Black
         private set
 
